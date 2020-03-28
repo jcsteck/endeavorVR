@@ -8,6 +8,9 @@
     <script src="js\aframe-sun-sky.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.js"> </script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-curve-component/dist/aframe-curve-component.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="http://kripken.github.io/ammo.js/builds/ammo.wasm.js"></script>
 
   </head>
   <body>
@@ -19,38 +22,98 @@
         </a-assets>
 
 
-          <a-entity
+
         </a-assets>
+
         <!-- CAMERA & BOAT. -->
-        <a-entity id="rig" position="0 0.44728 0">
-              <a-entity id="camera" camera="" look-controls="" position="0.14669 0.51405 -0.0905" rotation="-23.032903364259045 -124.21724998436241 0" data-aframe-inspector-original-camera="">
+
+        <a-entity id="track" position="0 3 90"
+        animation="property: position; to: 0 3 -90; loop: false; dur: 100000">
+        <a-entity id="rig"
+        animation="property: rotation;from: -3 0 0 ; to: 3 0 0; loop: true; dur: 5000; dir: alternate; easing: easeInOutQuad">
+        <!-- CAMERA-->
+
+              <a-entity id="camera" camera="" look-controls=""
+              position="0 0.71405 0"
+              rotation="0 0 0"
+              data-aframe-inspector-original-camera="">
               </a-entity>
-              <a-entity id="light-1" light="intensity: 0.53; distance: 0.52; angle: 50; penumbra: 0.53" rotation="0 179.9998479605043 0" position="0 0.19404 -2.38124" distance:="" 2;="" decay:="" 1="">
-              </a-entity>
+
+              <!-- LIGHT-->
+
               <a-entity id="boat-light-2" light="type: ambient; decay: 0; angle: 180; intensity: 0.3" rotation="" position="0 2 5">
-              </a-entity><a-entity id="light-2" light="type: ambient; decay: 0; angle: 180; intensity: 0.2" rotation="90 0 180" position="0 2 5">
               </a-entity>
-              <a-entity id="boat" gltf-model="url(/assets/3d/boat2.glb)" scale="2.74861 2.74861 2.74861" position="0.71376 -0.52335 0">
+              <!-- BOAT-->
 
-
+              <a-entity id="boat" rotation="0 -90 0 "
+              gltf-model="url(/assets/3d/boat2.glb)"
+              scale="4 3 4"
+              position="00 -0.52335 -0.8">
+              <!-- FLAG-->
+                <a-cylinder id="flag-pole"
+                scale="0.004 0.131 0.004"
+                position="0 0.571 0"
+                dynamic-body="shape: cylinder; mass: 0.00; halfExtents: 0.5 0.5 0.5">
+                  <a-box material=""
+                  constraint="target: #flag-pole;"
+                  geometry=""
+                  position="-10.713 0.291"
+                  scale="21.268 0.416 0.414"
+                  dynamic-body="shape: box; mass: 0.00; halfExtents: 0.5 0.5 0.5">
+                  </a-box>
+                </a-cylinder>
               </a-entity>
             </a-entity>
-        <!-- Primitives. -->
-        <a-entity environment="preset: egypt; groundColor: #445; grid: cross; playArea: 100; ground:none; skyColor: #82C8E4; skyType:atmosphere; lightPosition: 0 0.08 -0.2"></a-entity>
+          </a-entity>
 
-        <a-entity light="intensity: 0" position="0 20 -20" target="#boat">
-        </a-entity>
+            <a-entity
+            position-"0 0 0"
+            environment=
+            "ground: hills;
+            groundTexture: walkernoise;
+            groundYScale: 500;
+            groundColor: #c9b59a;
+            dressing: none;
+            dressingAmount: 10;
+            dressingScale:10;
+            grid: none;
+            playArea: 1.75;
+            skyColor: #82C8E4;
+            skyType:atmosphere;
+            lightPosition: -90 90 0"
+            animation="property: environment.lightPosition; to: 182 0 0; loop: false; dur: 10000">
+>
+            </a-entity>
+
+  <!-- Draw the Curve -->
+
+  <!-- Clone a Box along the Curve -->
+        <!-- ENVIRONMENT -->
+
+
+        <!-- SUN
+
         <a-circle id="sun" color="light blue" rotation="8.732449755588876 0 0" position="0 10 -30.59725" scale="0.19411 0.19411 0.19411" radius="32" material="color: #f9e6a4" geometry="">
 
                           <a-entity id="sunlight" light="type: spot; angle: 31.59; decay: 0.58; distance: 68.04; penumbra: 0.33; color: #ffd11a; groundColor: #ffffff; castShadow: true; intensity: 0.5" position="0 -1.01565 1.72015" distance:="" 200;="" decay:="" 10="" rotation="-9.48 180 0">
                           </a-entity><a-entity id="sunlight-2" light="type: spot; intensity: 16.57; angle: 35.06; distance: 65.31; penumbra: 0.2; decay: 14.87; color: #f8e39e" position="0.00904 17.54529 52.23242" distance:="" 200;="" decay:="" 10="" rotation="-12.985515468844978 0 0">
                           </a-entity>
-            </a-circle>
+        </a-circle>
+        -->
 
-
-
-        <a-ocean width="100" depth="100" density="100" opacity="0.8" position="0 -0.11664 0" ocean="">
+        <!--OCEAN-->
+        <a-ocean width="350"
+        speed="0.2"
+        speedVariance="5"
+        depth="250"
+        density="100"
+        opacity="0.9"
+        position="0 2 0"
+        amplitude="0.35"
+        amplitudeVariance="0.1"
+        ocean="">
         </a-ocean>
+
 
 
         <!-- Background sky. -->
